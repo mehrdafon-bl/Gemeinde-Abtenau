@@ -117,3 +117,10 @@ ion-note {
 ion-item.selected {
   --color: var(--ion-color-primary);
 }
+
+ion-menu ion-list#inbox-list ion-list-header {
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  text-transform: uppercase;
+  min-height: 20px;
+}

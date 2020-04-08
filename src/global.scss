@@ -24,3 +24,17 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+ion-menu-button {
+  color: var(--ion-color-primary);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/*ion-toolbar.in-toolbar{
+  background: url("/assets/logo.png") no-repeat 95% center transparent;
+  background-size: auto 90%;
+}*/

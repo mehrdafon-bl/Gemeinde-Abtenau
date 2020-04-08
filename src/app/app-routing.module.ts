@@ -4,12 +4,24 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'folder/Inbox',
+    redirectTo: 'news',
     pathMatch: 'full'
   },
   {
-    path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
+    path: 'news',
+    loadChildren: () => import('./news/news.module').then( m => m.NewsPageModule)
+  },
+  {
+    path: 'events',
+    loadChildren: () => import('./events/events.module').then( m => m.EventsPageModule)
+  },
+  {
+    path: 'official-board',
+    loadChildren: () => import('./official-board/official-board.module').then( m => m.OfficialBoardPageModule)
+  },
+  {
+    path: 'official-departments',
+    loadChildren: () => import('./official-departments/official-departments.module').then( m => m.OfficialDepartmentsPageModule)
   }
 ];
 

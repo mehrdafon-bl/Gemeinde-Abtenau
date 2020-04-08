@@ -1,0 +1,31 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Aktuelles</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <ng-container *ngIf="newsItems">
+        <ion-card *ngFor="let data of newsItems" class="detail-page-card" (click)="showDetail(data)">
+            <img *ngIf="data.images.length > 0" [src]="data.images[0]"/>
+
+            <ion-card-header>
+                <ion-card-subtitle *ngIf="data.published">{{data.published * 1000 | date:'dd.MM.yyyy'}}</ion-card-subtitle>
+                <ion-card-title *ngIf="data.title != ''">
+                    {{data.title}}
+                </ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content>
+                <div [innerHTML]="data.shortContent"></div>
+            </ion-card-content>
+        </ion-card>
+    </ng-container>
+</ion-content>

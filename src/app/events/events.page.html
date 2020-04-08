@@ -1,0 +1,54 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Termine</ion-title>
+    </ion-toolbar>
+
+    <ion-searchbar placeholder="Termine durchsuchen" (ionInput)="searchItems($event)"></ion-searchbar>
+</ion-header>
+
+<ion-content>
+    <div *ngIf="eventItems.length == 0 && isSearching == true" class="ion-padding">
+        <p>Keine Termine gefunden.</p>
+    </div>
+
+    <ion-list *ngIf="eventItems" inset="false">
+        <ng-container *ngFor="let eventData of eventItems">
+            <ion-item *ngFor="let event of eventData.data" (click)="showDetail(event)"
+                      [className]="event[1] | date: 'yyyMMdd'">
+                <ion-label class="ion-text-wrap event-label">
+                    <div class="avatar-date">
+                        <span class="avatar-day-month">{{event[1] | date:"dd.MM"}}</span>
+                        <span class="avatar-year">{{event[1] | date:"yyyy"}}</span>
+                    </div>
+
+                    <span class="event-title">{{event[0]}}</span>
+                </ion-label>
+            </ion-item>
+        </ng-container>
+    </ion-list>
+</ion-content>
+
+<ion-footer>
+    <ion-toolbar>
+        <ion-item lines="none">
+            <ion-icon slot="start" name="calendar-outline"></ion-icon>
+
+            <ion-label class="ion-text-center">
+                Datum auswählen
+            </ion-label>
+
+            <ion-datetime display-format="DD.MM.YYYY"
+                          cancel-text="Zurücksetzen"
+                          done-text="Auswählen"
+                          [yearValues]="yearValues"
+                          month-short-names="Jan,Feb,Mär,Apr,Mai,Jun,Jul,Aug,Sep,Okt,Nov,Dez"
+                          (ionChange)="datePicker($event)"
+                          (ionCancel)="resetDatePicker()"
+                          [value]="datePickerValue">
+            </ion-datetime>
+        </ion-item>
+    </ion-toolbar>
+</ion-footer>

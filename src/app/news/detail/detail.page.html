@@ -1,0 +1,25 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text=""></ion-back-button>
+        </ion-buttons>
+        <ion-title>Aktuelles</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card class="news-detail">
+        <img *ngIf="data.images.length > 0" [src]="data.images[0]"/>
+
+        <ion-card-header>
+            <ion-card-subtitle *ngIf="data.published">{{data.published * 1000 | date:'dd.MM.yyyy'}}</ion-card-subtitle>
+            <ion-card-title *ngIf="data.title != ''">
+                {{data.title}}
+            </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+            <div [innerHTML]="data.content"></div>
+        </ion-card-content>
+    </ion-card>
+</ion-content>
