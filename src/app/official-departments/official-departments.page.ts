@@ -20,7 +20,7 @@ export class OfficialDepartmentsPage implements OnInit {
     }
 
     getApiData(isRefresher = false) {
-        const api = this.api.get('/official-departments', isRefresher ? false : true);
+        const api = this.api.get('/official-departments');
         api.subscribe(
             next => {
                 this.officialDepartments = next.data.officialDepartments;

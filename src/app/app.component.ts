@@ -10,6 +10,7 @@ import {StatusBar} from '@ionic-native/status-bar/ngx';
     styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit {
+    menuStateClass: any;
     public selectedIndex = 0;
     public appPages = [
         {
@@ -32,6 +33,11 @@ export class AppComponent implements OnInit {
             url: '/official-departments',
             icon: 'people'
         },
+        {
+            title: 'Impressum / Datenschutz',
+            url: '/imprint',
+            icon: 'document'
+        },
     ];
 
     constructor(
@@ -46,11 +52,6 @@ export class AppComponent implements OnInit {
         this.platform.ready().then(() => {
             this.statusBar.styleDefault();
             this.splashScreen.hide();
-
-            /*const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-
-            this.toggleDarkTheme(prefersDark.matches);
-            prefersDark.addListener((mediaQuery) => this.toggleDarkTheme(mediaQuery.matches));*/
         });
     }
 
@@ -61,7 +62,11 @@ export class AppComponent implements OnInit {
         }
     }
 
-    /*toggleDarkTheme(shouldAdd) {
-        document.body.classList.toggle('dark', shouldAdd);
-    }*/
+    menuState(ev: any) {
+        if (ev.type === 'ionDidOpen') {
+            this.menuStateClass = 'open';
+        } else {
+            this.menuStateClass = 'close';
+        }
+    }
 }

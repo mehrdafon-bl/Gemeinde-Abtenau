@@ -22,6 +22,10 @@ const routes: Routes = [
   {
     path: 'official-departments',
     loadChildren: () => import('./official-departments/official-departments.module').then( m => m.OfficialDepartmentsPageModule)
+  },
+  {
+    path: 'imprint',
+    loadChildren: () => import('./imprint/imprint.module').then( m => m.ImprintPageModule)
   }
 ];
 

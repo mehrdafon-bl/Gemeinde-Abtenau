@@ -124,3 +124,42 @@ ion-menu ion-list#inbox-list ion-list-header {
   text-transform: uppercase;
   min-height: 20px;
 }
+
+.menu-logo-container {
+  text-align: center;
+  border-bottom: 1px solid var(--ion-color-light-shade);
+  padding-bottom: 15px;
+
+  .menu-logo {
+    width: 75%;
+    height: auto;
+  }
+}
+
+.mehrdafon-logo-container {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+
+  small {
+    color: var(--ion-color-medium-shade);
+  }
+
+  &.open {
+    .mehrdafon-logo {
+      background-position: 0 -15px;
+    }
+  }
+
+  .mehrdafon-logo {
+    transition: all .25s linear;
+    text-indent: -9999px;
+    background: url("/assets/mehrdafon.png") no-repeat top center transparent;
+    display: inline-block;
+    height: 15px;
+    width: 70px;
+    background-position: 0 0;
+    position: relative;
+    bottom: 3px;
+  }
+}

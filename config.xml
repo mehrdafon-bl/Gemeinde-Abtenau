@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.mehrdafon.abtenau" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Abtenau</name>
     <description>Marktgemeinde Abtenau</description>
     <author email="office@mehrdafon.com" href="http://mehrdafon.com/">mehrdafon GmbH</author>
@@ -99,15 +99,6 @@
         <splash height="1242" src="resources/ios/splash/Default-Landscape-2688h~iphone.png" width="2688" />
         <splash height="1792" src="resources/ios/splash/Default-1792h~iphone.png" width="828" />
         <splash height="828" src="resources/ios/splash/Default-Landscape-1792h~iphone.png" width="1792" />
-    </platform>
-    <platform name="windows">
-        <icon src="resources/windows/icon/Square44x44Logo.png" target="Square44x44Logo" />
-        <icon src="resources/windows/icon/SmallTile.png" target="Square71x71Logo" />
-        <icon src="resources/windows/icon/Square150x150Logo.png" target="Square150x150Logo" />
-        <icon src="resources/windows/icon/Square310x310Logo.png" target="Square310x310Logo" />
-        <icon src="resources/windows/icon/Wide310x150Logo.png" target="Wide310x150Logo" />
-        <icon src="resources/windows/icon/StoreLogo.png" target="StoreLogo" />
-        <splash src="resources/windows/splash/Splash.png" target="SplashScreen" />
     </platform>
     <plugin name="cordova-plugin-whitelist" spec="1.3.3" />
     <plugin name="cordova-plugin-statusbar" spec="2.4.2" />

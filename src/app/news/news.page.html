@@ -8,6 +8,13 @@
 </ion-header>
 
 <ion-content>
+    <div class="welcome ion-padding">
+        <img src="/assets/logo_website.png" class="logo" />
+
+        <h1>Herzlich Willkommen</h1>
+        <p>in der App der Marktgemeinde Abtenau.</p>
+    </div>
+
     <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
@@ -19,7 +26,7 @@
             <ion-card-header>
                 <ion-card-subtitle *ngIf="data.published">{{data.published * 1000 | date:'dd.MM.yyyy'}}</ion-card-subtitle>
                 <ion-card-title *ngIf="data.title != ''">
-                    {{data.title}}
+                    <h4>{{data.title}}</h4>
                 </ion-card-title>
             </ion-card-header>
 
