@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Deploy} from 'cordova-plugin-ionic/dist/ngx';
-import {AlertController, ToastController} from '@ionic/angular';
+import {AlertController} from '@ionic/angular';
 
 @Injectable({
     providedIn: 'root'
@@ -12,8 +12,7 @@ export class LiveupdateService {
     updateProcessType: any;
 
     constructor(
-        private ionicDeploy: Deploy,
-        public toastController: ToastController,
+        public ionicDeploy: Deploy,
         public alertController: AlertController) {
     }
 
@@ -41,9 +40,14 @@ export class LiveupdateService {
 
                 this.build = update.build;
             }, time);
-        }
+        } else {
+            const currentConfiguration = this.ionicDeploy.getConfiguration();
+            currentConfiguration.then((conf) => {
+                this.build = conf.currentBuildId;
 
-        this.build = update.build;
+                console.log(conf);
+            });
+        }
     }
 
     async performUpdate() {
@@ -59,7 +63,5 @@ export class LiveupdateService {
         });
 
         await this.ionicDeploy.reloadApp();
-
-        console.log('# perform update');
     }
 }

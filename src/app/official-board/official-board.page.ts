@@ -26,7 +26,6 @@ export class OfficialBoardPage implements OnInit {
         const api = this.api.get('/official-board', isRefresher ? false : true);
         api.subscribe(
             next => {
-                /*console.log(next.data.news);*/
                 this.boardItems = next.data.officialBoard;
                 this.boardItemsRaw = this.boardItems;
 
