@@ -30,7 +30,6 @@ export class NewsPage implements OnInit {
         const api = this.api.get('/news', isRefresher ? false : true);
         api.subscribe(
             next => {
-                /*console.log(next.data.news);*/
                 this.newsItems = next.data.news;
 
                 if (isRefresher) {

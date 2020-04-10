@@ -44,8 +44,6 @@ export class LiveupdateService {
             const currentConfiguration = this.ionicDeploy.getConfiguration();
             currentConfiguration.then((conf) => {
                 this.build = conf.currentBuildId;
-
-                console.log(conf);
             });
         }
     }
