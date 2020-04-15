@@ -62,5 +62,4 @@ export class OfficialBoardPage implements OnInit {
             this.boardItems = this.boardItemsRaw;
         }
     }
-
 }

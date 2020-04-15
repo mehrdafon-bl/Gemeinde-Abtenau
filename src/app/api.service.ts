@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {LoadingController} from '@ionic/angular';
+import {LoadingController, Platform} from '@ionic/angular';
 import {Observable} from 'rxjs';
 import {ToastController} from '@ionic/angular';
+import {InAppBrowser, InAppBrowserOptions} from '@ionic-native/in-app-browser/ngx';
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +17,65 @@ export class ApiService {
 
     loadingAnimation: any;
 
-    constructor(private http: HttpClient, public loadingController: LoadingController, public toastController: ToastController) {
+    inAppBrowserOptions: InAppBrowserOptions = {
+        allowInlineMediaPlayback: 'yes',
+        beforeload: 'yes',
+        clearcache: 'yes',
+        cleardata: 'yes',
+        clearsessioncache: 'yes',
+        closebuttoncaption: '×',
+        closebuttoncolor: '#ffffff',
+        disallowoverscroll: 'yes',
+        enableViewportScale: 'yes',
+        footer: 'no',
+        footercolor: '#00649c',
+        fullscreen: 'yes',
+        hardwareback: 'yes',
+        hidden: 'no',
+        hidenavigationbuttons: 'yes',
+        hidespinner: 'no',
+        hideurlbar: 'yes',
+        keyboardDisplayRequiresUserAction: 'yes',
+        lefttoright: 'no',
+        location: 'yes',
+        mediaPlaybackRequiresUserAction: 'yes',
+        navigationbuttoncolor: '#ffffff',
+        presentationstyle: 'fullscreen',
+        shouldPauseOnSuspend: 'yes',
+        suppressesIncrementalRendering: 'yes',
+        toolbar: 'yes',
+        toolbarcolor: '#00649c',
+        toolbarposition: 'bottom',
+        toolbartranslucent: 'yes',
+        transitionstyle: 'coververtical',
+        useWideViewPort: 'yes',
+        usewkwebview: 'yes',
+        zoom: 'yes'
+    };
+
+    inAppBrowserOptionsiOS: InAppBrowserOptions = {
+        allowInlineMediaPlayback: 'yes',
+        closebuttoncaption: '×',
+        closebuttoncolor: '#ffffff',
+        disallowoverscroll: 'yes',
+        enableViewportScale: 'yes',
+        hidenavigationbuttons: 'yes',
+        hidespinner: 'no',
+        lefttoright: 'no',
+        location: 'no',
+        navigationbuttoncolor: '#ffffff',
+        toolbar: 'yes',
+        toolbarcolor: '#00649c',
+        toolbarposition: 'bottom',
+        usewkwebview: 'yes',
+    };
+
+    constructor(
+        private http: HttpClient,
+        public loadingController: LoadingController,
+        public toastController: ToastController,
+        private iab: InAppBrowser,
+        public platform: Platform) {
     }
 
     get(url: string, showLoading = true): Observable<any> {
@@ -65,5 +124,19 @@ export class ApiService {
         });
 
         toast.present();
+    }
+
+    openUrl(url: any) {
+        if (url.indexOf('.pdf') > -1 && this.platform.is('android')) {
+            this.iab.create(
+                'https://docs.google.com/gview?embedded=true&url=' + encodeURI(url),
+                '_blank',
+                this.inAppBrowserOptions
+            );
+        } else if (this.platform.is('ios')) {
+            this.iab.create(url, '_blank', this.inAppBrowserOptionsiOS);
+        } else {
+            this.iab.create(url, '_blank', this.inAppBrowserOptions);
+        }
     }
 }

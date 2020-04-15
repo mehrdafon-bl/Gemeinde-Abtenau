@@ -136,6 +136,21 @@ ion-menu ion-list#inbox-list ion-list-header {
   }
 }
 
+ion-menu.ios .menu-logo-container {
+  padding-top: 23px;
+
+  .menu-logo {
+  }
+}
+
+ion-menu.ios {
+  overflow: hidden;
+
+  ion-content {
+    overflow: hidden;
+  }
+}
+
 .mehrdafon-logo-container {
   position: absolute;
   bottom: 15px;
@@ -163,3 +178,4 @@ ion-menu ion-list#inbox-list ion-list-header {
     bottom: 3px;
   }
 }
+

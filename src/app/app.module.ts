@@ -6,6 +6,7 @@ import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {Deploy} from 'cordova-plugin-ionic/dist/ngx';
+import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
 
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
@@ -26,6 +27,7 @@ import {DatePipe} from '@angular/common';
         SplashScreen,
         DatePipe,
         Deploy,
+        InAppBrowser,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
     bootstrap: [AppComponent]
