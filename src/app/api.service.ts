@@ -11,9 +11,11 @@ import {InAppBrowser, InAppBrowserOptions} from '@ionic-native/in-app-browser/ng
 export class ApiService {
 
     readonly loadingAnimationText = 'Daten werden geladen';
-    readonly toastApiErrorText = 'Ein Fehler ist aufgetreten. Bitte überprüfen Sie die Internetverbindung oder versuchen Sie es später noch ein mal.';
+    readonly toastApiErrorText = 'Ein Fehler ist aufgetreten. ' +
+        'Bitte überprüfen Sie die Internetverbindung oder versuchen Sie es später noch ein mal.';
 
-    readonly apiUrl = 'http://www.abtenau.at/api';
+    readonly websiteUrl = 'http://www.abtenau.at';
+    readonly apiUrl = this.websiteUrl + '/api';
 
     loadingAnimation: any;
 
