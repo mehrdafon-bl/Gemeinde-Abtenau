@@ -17,7 +17,7 @@ export class ApiService {
 
     loadingAnimation: any;
 
-    inAppBrowserOptions: InAppBrowserOptions = {
+    inAppBrowserOptionsAndroid: InAppBrowserOptions = {
         allowInlineMediaPlayback: 'yes',
         beforeload: 'yes',
         clearcache: 'yes',
@@ -25,31 +25,19 @@ export class ApiService {
         clearsessioncache: 'yes',
         closebuttoncaption: '×',
         closebuttoncolor: '#ffffff',
-        disallowoverscroll: 'yes',
-        enableViewportScale: 'yes',
         footer: 'no',
         footercolor: '#00649c',
-        fullscreen: 'yes',
         hardwareback: 'yes',
         hidden: 'no',
         hidenavigationbuttons: 'yes',
-        hidespinner: 'no',
         hideurlbar: 'yes',
-        keyboardDisplayRequiresUserAction: 'yes',
         lefttoright: 'no',
         location: 'yes',
         mediaPlaybackRequiresUserAction: 'yes',
         navigationbuttoncolor: '#ffffff',
-        presentationstyle: 'fullscreen',
         shouldPauseOnSuspend: 'yes',
-        suppressesIncrementalRendering: 'yes',
-        toolbar: 'yes',
         toolbarcolor: '#00649c',
-        toolbarposition: 'bottom',
-        toolbartranslucent: 'yes',
-        transitionstyle: 'coververtical',
         useWideViewPort: 'yes',
-        usewkwebview: 'yes',
         zoom: 'yes'
     };
 
@@ -128,15 +116,17 @@ export class ApiService {
 
     openUrl(url: any) {
         if (url.indexOf('.pdf') > -1 && this.platform.is('android')) {
+            this.inAppBrowserOptionsAndroid.zoom = 'no';
+
             this.iab.create(
-                'https://docs.google.com/gview?embedded=true&url=' + encodeURI(url),
+                this.apiUrl + '/pdf/web/viewer.html?file=' + url,
                 '_blank',
-                this.inAppBrowserOptions
+                this.inAppBrowserOptionsAndroid
             );
         } else if (this.platform.is('ios')) {
             this.iab.create(url, '_blank', this.inAppBrowserOptionsiOS);
         } else {
-            this.iab.create(url, '_blank', this.inAppBrowserOptions);
+            this.iab.create(url, '_blank', this.inAppBrowserOptionsAndroid);
         }
     }
 }
