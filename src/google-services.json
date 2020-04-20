@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "978176498034",
+    "firebase_url": "https://abtenau.firebaseio.com",
+    "project_id": "abtenau",
+    "storage_bucket": "abtenau.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:978176498034:android:b0584c8ef62efb8e3fa5eb",
+        "android_client_info": {
+          "package_name": "com.mehrdafon.abtenau"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "978176498034-0b8tp69r3806et4f4nqkg3h0o46o79ps.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBryEAAx7qIL1iR6yW7eL_jvgjZ5hz3yt0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "978176498034-0b8tp69r3806et4f4nqkg3h0o46o79ps.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,6 +4,8 @@ import {Platform} from '@ionic/angular';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {LiveupdateService} from './liveupdate.service';
+import {OneSignal} from '@ionic-native/onesignal/ngx';
+import {Device} from '@ionic-native/device/ngx';
 
 @Component({
     selector: 'app-root',
@@ -12,6 +14,10 @@ import {LiveupdateService} from './liveupdate.service';
 })
 export class AppComponent implements OnInit {
     menuStateClass: any;
+    pushId: any;
+    deviceId: any;
+    deviceDataTabCounter = 0;
+    showDeviceData = false;
     public selectedIndex = 0;
     public appPages = [
         {
@@ -45,7 +51,9 @@ export class AppComponent implements OnInit {
         private platform: Platform,
         private splashScreen: SplashScreen,
         private statusBar: StatusBar,
-        private liveUpdate: LiveupdateService
+        private liveUpdate: LiveupdateService,
+        private oneSignal: OneSignal,
+        private device: Device
     ) {
         this.initializeApp();
     }
@@ -54,6 +62,7 @@ export class AppComponent implements OnInit {
         this.platform.ready().then(() => {
             this.statusBar.styleDefault();
             this.splashScreen.hide();
+            this.initOneSignal();
         });
     }
 
@@ -71,6 +80,34 @@ export class AppComponent implements OnInit {
             this.menuStateClass = 'open';
         } else {
             this.menuStateClass = 'close';
+        }
+    }
+
+    initOneSignal() {
+        this.oneSignal
+            .startInit('c396d07c-01d8-4fb4-a19a-2bf02848f379', '978176498034')
+            .inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert)
+            .endInit();
+    }
+
+    deviceData() {
+        if (this.deviceDataTabCounter >= 4 && this.showDeviceData === false) {
+            this.showDeviceData = true;
+
+            this.oneSignal.getIds().then(data => {
+                this.pushId = data.userId;
+            });
+
+            this.deviceId = this.device.uuid;
+
+            setTimeout(
+                () => {
+                    this.showDeviceData = false;
+                    this.deviceDataTabCounter = 0;
+                }, 15000
+            );
+        } else {
+            this.deviceDataTabCounter++;
         }
     }
 }

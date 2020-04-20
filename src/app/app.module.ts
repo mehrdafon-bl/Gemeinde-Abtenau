@@ -12,6 +12,8 @@ import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {HttpClientModule} from '@angular/common/http';
 import {DatePipe} from '@angular/common';
+import {OneSignal} from '@ionic-native/onesignal/ngx';
+import {Device} from '@ionic-native/device/ngx';
 
 @NgModule({
     declarations: [AppComponent],
@@ -28,6 +30,8 @@ import {DatePipe} from '@angular/common';
         DatePipe,
         Deploy,
         InAppBrowser,
+        OneSignal,
+        Device,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
     bootstrap: [AppComponent]

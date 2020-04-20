@@ -1,6 +1,7 @@
 <ion-app>
     <ion-split-pane contentId="main-content">
-        <ion-menu contentId="main-content" type="overlay" (ionDidOpen)="menuState($event)" (ionDidClose)="menuState($event)">
+        <ion-menu contentId="main-content" type="overlay" (ionDidOpen)="menuState($event)"
+                  (ionDidClose)="menuState($event)">
             <ion-content>
                 <ion-list id="inbox-list">
                     <ion-list-header>
@@ -19,19 +20,26 @@
                     </ion-menu-toggle>
                 </ion-list>
 
+                <div *ngIf="showDeviceData" class="device-data">
+                    <small>
+                        Push-ID: {{pushId}}<br/>
+                        UUID: {{deviceId}}
+                    </small>
+                </div>
+
                 <div [className]="menuStateClass + ' mehrdafon-logo-container'">
                     <strong *ngIf="liveUpdate.showUpdateProcess">
                         <small>{{liveUpdate.updateProcessType}}: {{liveUpdate.updateProgress}}%</small>
                     </strong>
 
-                    <br />
-                    <br />
+                    <br/>
+                    <br/>
 
                     <small *ngIf="liveUpdate.build">
                         Build {{liveUpdate.build}} |
                     </small>
                     <small>
-                        APP by <span class="mehrdafon-logo">mehrdafon GmbH</span>
+                        APP by <span class="mehrdafon-logo" (click)="deviceData()">mehrdafon GmbH</span>
                     </small>
                 </div>
             </ion-content>
