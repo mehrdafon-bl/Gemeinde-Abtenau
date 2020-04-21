@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ApiService} from '../api.service';
 import {NavigationExtras, Router} from '@angular/router';
 import {DatePipe} from '@angular/common';
+import {SqliteService} from '../sqlite.service';
 
 @Component({
     selector: 'app-events',
@@ -16,7 +17,11 @@ export class EventsPage implements OnInit {
     isSearching = false;
     datePickerValue: any;
 
-    constructor(private api: ApiService, private router: Router, public datepipe: DatePipe) {
+    constructor(
+        private api: ApiService,
+        private router: Router,
+        public datepipe: DatePipe,
+        private sqLite: SqliteService) {
     }
 
     ngOnInit() {
@@ -37,10 +42,55 @@ export class EventsPage implements OnInit {
                 this.eventItems = next.data.events;
                 this.yearValues = next.data.years;
 
+                this.sqLite.db.executeSql('SELECT * FROM api_content WHERE api_path = ?', ['events'])
+                    .then((data) => {
+                        if (data.rows.length > 1 || data.rows.length < 1) {
+                            this.sqLite.db.executeSql('DELETE FROM api_content WHERE api_path = ?', ['events'])
+                                .then(() => {
+                                    this.sqLite.db.executeSql(
+                                        'INSERT INTO api_content (api_path, api_data) VALUES(?,?)',
+                                        ['events', JSON.stringify(next.data)])
+                                        .then(() => {
+                                        })
+                                        .catch((ei) => console.log('#insert dberror: ' + JSON.stringify(ei)));
+                                })
+                                .catch((ed) => console.log('#delete dberror: ' + JSON.stringify(ed)));
+                        } else {
+                            this.sqLite.db.executeSql(
+                                'UPDATE api_content SET api_data = ? WHERE api_path = ?',
+                                [JSON.stringify(next.data), 'events'])
+                                .then(() => {
+                                })
+                                .catch((eu) => console.log('#update dberror: ' + JSON.stringify(eu)));
+                        }
+                    })
+                    .catch((es) => {
+                        console.log('#select dberror: ' + JSON.stringify(es));
+
+                        this.sqLite.db.executeSql(
+                            'INSERT INTO api_content (api_path, api_data) VALUES(?,?)',
+                            ['events', JSON.stringify(next.data)])
+                            .then(() => {
+                            })
+                            .catch((ei) => console.log('#insert dberror: ' + JSON.stringify(ei)));
+                    });
+
                 this.eventItemsRaw = this.eventItems;
             },
             error => {
                 console.log(error);
+
+                this.sqLite.db.executeSql('SELECT * FROM api_content WHERE api_path = ?', ['events'])
+                    .then((data) => {
+                        for (let i = 0; i < data.rows.length; i++) {
+                            const dbData = JSON.parse(data.rows.item(i).api_data);
+                            console.log(dbData);
+                            this.eventItems = dbData.events;
+                            this.yearValues = dbData.years;
+                            this.eventItemsRaw = this.eventItems;
+                        }
+                    })
+                    .catch((es) => console.log('#select error: ' + JSON.stringify(es)));
             }
         );
     }

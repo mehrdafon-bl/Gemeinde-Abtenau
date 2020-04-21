@@ -14,6 +14,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {DatePipe} from '@angular/common';
 import {OneSignal} from '@ionic-native/onesignal/ngx';
 import {Device} from '@ionic-native/device/ngx';
+import {SQLite} from '@ionic-native/sqlite/ngx';
 
 @NgModule({
     declarations: [AppComponent],
@@ -32,6 +33,7 @@ import {Device} from '@ionic-native/device/ngx';
         InAppBrowser,
         OneSignal,
         Device,
+        SQLite,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
     bootstrap: [AppComponent]

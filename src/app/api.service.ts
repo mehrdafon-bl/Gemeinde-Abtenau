@@ -100,7 +100,7 @@ export class ApiService {
     async showLoading() {
         this.loadingAnimation = await this.loadingController.create({
             message: this.loadingAnimationText,
-            duration: 5000
+            duration: 4000
         });
 
         await this.loadingAnimation.present();
@@ -109,8 +109,8 @@ export class ApiService {
     async showToastApiError() {
         const toast = await this.toastController.create({
             message: this.toastApiErrorText,
-            position: 'middle',
-            duration: 4000
+            position: 'bottom',
+            duration: 3000
         });
 
         toast.present();
