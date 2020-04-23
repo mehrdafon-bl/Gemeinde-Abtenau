@@ -16,7 +16,7 @@ export class NewsPage implements OnInit {
     constructor(
         private api: ApiService,
         private router: Router,
-        private sqlite: SqliteService) {
+        private sqLite: SqliteService) {
     }
 
     ngOnInit() {
@@ -31,18 +31,20 @@ export class NewsPage implements OnInit {
     }
 
     getApiData(isRefresher = false) {
+        this.sqLite.initDb();
+
         const api = this.api.get('/news', isRefresher ? false : true);
         api.subscribe(
             next => {
                 this.newsItems = next.data.news;
 
                 if (this.newsItems.length > 0) {
-                    this.sqlite.db.executeSql('SELECT * FROM api_content WHERE api_path = ?', ['news'])
+                    this.sqLite.db.executeSql('SELECT * FROM api_content WHERE api_path = ?', ['news'])
                         .then((data) => {
                             if (data.rows.length > 1 || data.rows.length < 1) {
-                                this.sqlite.db.executeSql('DELETE FROM api_content WHERE api_path = ?', ['news'])
+                                this.sqLite.db.executeSql('DELETE FROM api_content WHERE api_path = ?', ['news'])
                                     .then(() => {
-                                        this.sqlite.db.executeSql(
+                                        this.sqLite.db.executeSql(
                                             'INSERT INTO api_content (api_path, api_data) VALUES(?,?)',
                                             ['news', JSON.stringify(this.newsItems)])
                                             .then(() => {
@@ -51,7 +53,7 @@ export class NewsPage implements OnInit {
                                     })
                                     .catch((ed) => console.log('#delete dberror: ' + JSON.stringify(ed)));
                             } else {
-                                this.sqlite.db.executeSql(
+                                this.sqLite.db.executeSql(
                                     'UPDATE api_content SET api_data = ? WHERE api_path = ?',
                                     [JSON.stringify(this.newsItems), 'news'])
                                     .then(() => {
@@ -62,7 +64,7 @@ export class NewsPage implements OnInit {
                         .catch((es) => {
                             console.log('#select dberror: ' + JSON.stringify(es));
 
-                            this.sqlite.db.executeSql(
+                            this.sqLite.db.executeSql(
                                 'INSERT INTO api_content (api_path, api_data) VALUES(?,?)',
                                 ['news', JSON.stringify(this.newsItems)])
                                 .then(() => {
@@ -106,7 +108,7 @@ export class NewsPage implements OnInit {
     }
 
     getDataFromDb() {
-        this.sqlite.db.executeSql('SELECT * FROM api_content WHERE api_path = ?', ['news'])
+        this.sqLite.db.executeSql('SELECT * FROM api_content WHERE api_path = ?', ['news'])
             .then((data) => {
                 for (let i = 0; i < data.rows.length; i++) {
                     this.newsItems = JSON.parse(data.rows.item(i).api_data);

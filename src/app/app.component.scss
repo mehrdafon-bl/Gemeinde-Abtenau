@@ -133,6 +133,10 @@ ion-menu ion-list#inbox-list ion-list-header {
   .menu-logo {
     width: 75%;
     height: auto;
+
+    &.dark{
+      display: none;
+    }
   }
 }
 
@@ -179,6 +183,32 @@ ion-menu.ios {
   }
 }
 
-.device-data{
+.device-data {
   padding: 5px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .menu-logo-container {
+    .menu-logo {
+      display: none;
+
+      &.dark{
+        display: inline-block;
+      }
+    }
+  }
+
+  .mehrdafon-logo-container {
+    small {
+    }
+
+    &.open {
+      .mehrdafon-logo {
+      }
+    }
+
+    .mehrdafon-logo {
+      background: url("/assets/mehrdafon_dark.png") no-repeat top center transparent;
+    }
+  }
 }

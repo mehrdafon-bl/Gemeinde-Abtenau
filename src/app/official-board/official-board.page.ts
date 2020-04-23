@@ -27,6 +27,8 @@ export class OfficialBoardPage implements OnInit {
     }
 
     getApiData(isRefresher = false) {
+        this.sqLite.initDb();
+
         const api = this.api.get('/official-board', isRefresher ? false : true);
         api.subscribe(
             next => {

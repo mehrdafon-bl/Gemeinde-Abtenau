@@ -32,13 +32,9 @@ export class DetailPage implements OnInit {
         for (let i = 0; i < allLinks.length; i++) {
 
             this.renderer.listen(allLinks.item(i), 'click', (event) => {
-                if (event.target.href.indexOf(this.api.websiteUrl) > -1) {
-                    this.api.openUrl(event.target.href);
+                this.api.openUrl(event.target.href);
 
-                    return false;
-                } else {
-                    return true;
-                }
+                return false;
             });
 
         }

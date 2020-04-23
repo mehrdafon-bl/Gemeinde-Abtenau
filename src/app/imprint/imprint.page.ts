@@ -24,6 +24,8 @@ export class ImprintPage implements OnInit {
     }
 
     getApiData(isRefresher = false) {
+        this.sqLite.initDb();
+
         const api = this.api.get('/imprint-data-protection');
         api.subscribe(
             next => {

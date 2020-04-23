@@ -52,13 +52,6 @@ export class OfficialDepartmentsPage implements OnInit {
                     })
                     .catch((es) => {
                         console.log('#select dberror: ' + JSON.stringify(es));
-
-                        this.sqLite.db.executeSql(
-                            'INSERT INTO api_content (api_path, api_data) VALUES(?,?)',
-                            ['official-departments', JSON.stringify(this.officialDepartments)])
-                            .then(() => {
-                            })
-                            .catch((ei) => console.log('#insert dberror: ' + JSON.stringify(ei)));
                     });
             },
             error => {

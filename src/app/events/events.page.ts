@@ -36,6 +36,8 @@ export class EventsPage implements OnInit {
     }
 
     getApiData(isRefresher = false) {
+        this.sqLite.initDb();
+
         const api = this.api.get('/events', true);
         api.subscribe(
             next => {

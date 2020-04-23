@@ -1,10 +1,30 @@
-.welcome{
+.welcome {
   text-align: center;
   border-bottom: 1px solid var(--ion-color-light-shade);
   margin: 15px;
 
-  .logo{
+  .logo {
     width: 85%;
     height: auto;
+
+    &.dark {
+      display: none;
+    }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .welcome {
+    text-align: center;
+    border-bottom: 1px solid var(--ion-color-light-shade);
+    margin: 15px;
+
+    .logo {
+      display: none;
+
+      &.dark {
+        display: inline-block;
+      }
+    }
   }
 }
