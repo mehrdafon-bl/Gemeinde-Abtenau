@@ -13,6 +13,57 @@
   }
 }
 
+.news-items-container {
+  ion-col {
+    &.ios {
+      padding-bottom: 16px;
+    }
+
+    &.md {
+      padding-bottom: 10px;
+    }
+
+    &:nth-child(odd) {
+      .detail-page-card {
+        &.ios {
+          margin-right: 8px;
+        }
+
+        &.md {
+          margin-right: 5px;
+        }
+      }
+    }
+
+    &:nth-child(even) {
+      .detail-page-card {
+        &.ios {
+          margin-left: 8px;
+        }
+
+        &.md {
+          margin-left: 5px;
+        }
+      }
+    }
+
+    .detail-page-card.ios {
+      height: 100%;
+    }
+
+    .detail-page-card.md {
+      height: 100%;
+    }
+
+    .detail-page-card {
+      & > img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   .welcome {
     text-align: center;

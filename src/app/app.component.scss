@@ -134,7 +134,7 @@ ion-menu ion-list#inbox-list ion-list-header {
     width: 75%;
     height: auto;
 
-    &.dark{
+    &.dark {
       display: none;
     }
   }
@@ -183,6 +183,14 @@ ion-menu.ios {
   }
 }
 
+.menu-pane-visible {
+  .mehrdafon-logo-container {
+    .mehrdafon-logo {
+      background-position: 0 -15px;
+    }
+  }
+}
+
 .device-data {
   padding: 5px;
 }
@@ -192,7 +200,7 @@ ion-menu.ios {
     .menu-logo {
       display: none;
 
-      &.dark{
+      &.dark {
         display: inline-block;
       }
     }

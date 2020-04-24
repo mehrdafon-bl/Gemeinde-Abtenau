@@ -9,8 +9,8 @@
 
 <ion-content>
     <div class="welcome ion-padding">
-        <img src="/assets/logo_website.png" class="logo" />
-        <img src="/assets/logo_website_dark.png" class="logo dark" />
+        <img src="/assets/logo_website.png" class="logo"/>
+        <img src="/assets/logo_website_dark.png" class="logo dark"/>
 
         <h1>Herzlich Willkommen</h1>
         <p>in der App der Marktgemeinde Abtenau.</p>
@@ -21,19 +21,24 @@
     </ion-refresher>
 
     <ng-container *ngIf="newsItems">
-        <ion-card *ngFor="let data of newsItems" class="detail-page-card" (click)="showDetail(data)">
-            <img *ngIf="data.images.length > 0" [src]="data.images[0]"/>
+        <ion-row class="news-items-container">
+            <ion-col *ngFor="let data of newsItems" size="12" size-md="6" class="ion-no-padding">
+                <ion-card class="detail-page-card" (click)="showDetail(data)">
+                    <img *ngIf="data.images.length > 0" [src]="data.images[0]"/>
 
-            <ion-card-header>
-                <ion-card-subtitle *ngIf="data.published">{{data.published * 1000 | date:'dd.MM.yyyy'}}</ion-card-subtitle>
-                <ion-card-title *ngIf="data.title != ''">
-                    <h4>{{data.title}}</h4>
-                </ion-card-title>
-            </ion-card-header>
+                    <ion-card-header>
+                        <ion-card-subtitle
+                                *ngIf="data.published">{{data.published * 1000 | date:'dd.MM.yyyy'}}</ion-card-subtitle>
+                        <ion-card-title *ngIf="data.title != ''">
+                            <h4>{{data.title}}</h4>
+                        </ion-card-title>
+                    </ion-card-header>
 
-            <ion-card-content>
-                <div [innerHTML]="data.shortContent"></div>
-            </ion-card-content>
-        </ion-card>
+                    <ion-card-content>
+                        <div [innerHTML]="data.shortContent"></div>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
     </ng-container>
 </ion-content>

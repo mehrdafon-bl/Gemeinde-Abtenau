@@ -22,4 +22,10 @@
             <div [innerHTML]="data.content"></div>
         </ion-card-content>
     </ion-card>
+
+    <ng-container *ngIf="data.images.length > 1">
+        <ion-card class="news-detail" *ngFor="let image of data.images">
+            <img *ngIf="image != data.images[0]" [src]="image"/>
+        </ion-card>
+    </ng-container>
 </ion-content>

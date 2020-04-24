@@ -84,10 +84,12 @@ export class AppComponent implements OnInit {
     }
 
     initOneSignal() {
-        this.oneSignal
-            .startInit('c396d07c-01d8-4fb4-a19a-2bf02848f379', '978176498034')
-            .inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert)
-            .endInit();
+        if (this.device.cordova != null && (this.platform.is('android') || this.platform.is('ios'))) {
+            this.oneSignal
+                .startInit('c396d07c-01d8-4fb4-a19a-2bf02848f379', '978176498034')
+                .inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert)
+                .endInit();
+        }
     }
 
     deviceData() {
