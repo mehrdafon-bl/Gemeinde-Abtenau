@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Renderer2} from '@angular/core';
 import {ApiService} from '../api.service';
 import {SqliteService} from '../sqlite.service';
 
@@ -12,7 +12,8 @@ export class OfficialDepartmentsPage implements OnInit {
 
     constructor(
         private api: ApiService,
-        private sqLite: SqliteService) {
+        private sqLite: SqliteService,
+        public renderer: Renderer2) {
     }
 
     ngOnInit() {
@@ -27,6 +28,21 @@ export class OfficialDepartmentsPage implements OnInit {
         api.subscribe(
             next => {
                 this.officialDepartments = next.data.officialDepartments;
+
+                let allLinks = document.querySelectorAll('a');
+                let intervalForDom: any;
+
+                if (allLinks.length === 0) {
+                    intervalForDom = setInterval(() => {
+                        allLinks = document.querySelectorAll('a');
+
+                        if (allLinks.length > 0) {
+                            this.hrefFunctions();
+
+                            clearInterval(intervalForDom);
+                        }
+                    }, 500);
+                }
 
                 this.sqLite.db.executeSql('SELECT * FROM api_content WHERE api_path = ?', ['official-departments'])
                     .then((data) => {
@@ -66,6 +82,32 @@ export class OfficialDepartmentsPage implements OnInit {
                     .catch((es) => console.log('#select error: ' + JSON.stringify(es)));
             }
         );
+    }
+
+    hrefFunctions() {
+        const allLinks = document.querySelectorAll('a');
+
+        for (let i = 0; i < allLinks.length; i++) {
+            let el: any;
+            this.renderer.listen(allLinks.item(i), 'click', (event) => {
+                el = event.target;
+
+                if (typeof el.href === 'undefined') {
+                    event.path.forEach((val, key) => {
+                        if (typeof val.href !== 'undefined') {
+                            el = val;
+                        }
+                    });
+                }
+
+                if (el.href.indexOf('mailto:') === -1 && el.href.indexOf('tel:') === -1) {
+                    this.api.openUrl(el.href);
+
+                    return false;
+                }
+            });
+
+        }
     }
 
 }
