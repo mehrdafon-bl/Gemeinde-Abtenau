@@ -51,7 +51,7 @@ export class AppComponent implements OnInit {
         private platform: Platform,
         private splashScreen: SplashScreen,
         private statusBar: StatusBar,
-        private liveUpdate: LiveupdateService,
+        public liveUpdate: LiveupdateService,
         private oneSignal: OneSignal,
         private device: Device
     ) {

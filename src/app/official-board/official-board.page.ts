@@ -14,7 +14,7 @@ export class OfficialBoardPage implements OnInit {
     refresherEvent: any = [];
 
     constructor(
-        private api: ApiService,
+        public api: ApiService,
         private sqLite: SqliteService
     ) {
     }
