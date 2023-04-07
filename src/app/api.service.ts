@@ -14,7 +14,7 @@ export class ApiService {
     readonly toastApiErrorText = 'Ein Fehler ist aufgetreten. ' +
         'Bitte überprüfen Sie die Internetverbindung oder versuchen Sie es später noch ein mal.';
 
-    readonly websiteUrl = 'https://www.abtenau.at';
+    readonly websiteUrl = 'https://abtenau.web7.mehrdafon.com';
     readonly apiUrl = this.websiteUrl + '/api';
 
     loadingAnimation: any;
