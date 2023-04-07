@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {SQLite, SQLiteObject, SQLiteDatabaseConfig} from '@ionic-native/sqlite/ngx';
+import {SQLite, SQLiteObject, SQLiteDatabaseConfig} from '@awesome-cordova-plugins/sqlite/ngx';
 import {Platform} from '@ionic/angular';
-import {Device} from '@ionic-native/device/ngx';
+import {Device} from '@awesome-cordova-plugins/device/ngx';
 
 @Injectable({
     providedIn: 'root'

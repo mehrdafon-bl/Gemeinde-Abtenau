@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {LoadingController, Platform} from '@ionic/angular';
 import {Observable} from 'rxjs';
 import {ToastController} from '@ionic/angular';
-import {InAppBrowser, InAppBrowserOptions} from '@ionic-native/in-app-browser/ngx';
+import {InAppBrowser, InAppBrowserOptions} from '@awesome-cordova-plugins/in-app-browser/ngx';
 
 @Injectable({
     providedIn: 'root'
