@@ -24,7 +24,7 @@
                         <span class="avatar-year">{{event[1] | date:"yyyy"}}</span>
                     </div>
 
-                    <span class="event-title">{{event[0]}}</span>
+                    <span [innerHTML]="event[0]" class="event-title"></span>
                 </ion-label>
             </ion-item>
         </ng-container>
