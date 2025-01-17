@@ -3,7 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {LoadingController, Platform} from '@ionic/angular';
 import {Observable} from 'rxjs';
 import {ToastController} from '@ionic/angular';
-import {InAppBrowser, InAppBrowserOptions} from '@awesome-cordova-plugins/in-app-browser/ngx';
+import { Browser } from '@capacitor/browser';
+// import { FileOpener, FileOpenerOptions } from '@capacitor-community/file-opener';
 
 @Injectable({
     providedIn: 'root'
@@ -19,52 +20,25 @@ export class ApiService {
 
     loadingAnimation: any;
 
-    inAppBrowserOptionsAndroid: InAppBrowserOptions = {
-        allowInlineMediaPlayback: 'yes',
-        beforeload: 'yes',
-        clearcache: 'yes',
-        cleardata: 'yes',
-        clearsessioncache: 'yes',
-        closebuttoncaption: '×',
-        closebuttoncolor: '#ffffff',
-        footer: 'no',
-        footercolor: '#00649c',
-        hardwareback: 'yes',
-        hidden: 'no',
-        hidenavigationbuttons: 'yes',
-        hideurlbar: 'yes',
-        lefttoright: 'no',
-        location: 'yes',
-        mediaPlaybackRequiresUserAction: 'yes',
-        navigationbuttoncolor: '#ffffff',
-        shouldPauseOnSuspend: 'yes',
-        toolbarcolor: '#00649c',
-        useWideViewPort: 'yes',
-        zoom: 'yes'
-    };
+    // inAppBrowserOptionsAndroid: AndroidWebViewOptions = {
+    //     allowZoom: true,
+    //     hardwareBack: true,
+    //     pauseMedia: true,
+    // };
 
-    inAppBrowserOptionsiOS: InAppBrowserOptions = {
-        allowInlineMediaPlayback: 'yes',
-        closebuttoncaption: '×',
-        closebuttoncolor: '#ffffff',
-        disallowoverscroll: 'yes',
-        enableViewportScale: 'yes',
-        hidenavigationbuttons: 'yes',
-        hidespinner: 'no',
-        lefttoright: 'no',
-        location: 'no',
-        navigationbuttoncolor: '#ffffff',
-        toolbar: 'yes',
-        toolbarcolor: '#00649c',
-        toolbarposition: 'bottom',
-        usewkwebview: 'yes',
-    };
+    // inAppBrowserOptionsiOS: iOSWebViewOptions = {
+    //     allowOverScroll: true,
+    //     enableViewportScale: true,
+    //     allowInLineMediaPlayback: true,
+    //     surpressIncrementalRendering: true,
+    //     viewStyle: iOSViewStyle.FULL_SCREEN,
+    //     animationEffect: iOSAnimation.FLIP_HORIZONTAL
+    // };
 
     constructor(
         private http: HttpClient,
         public loadingController: LoadingController,
         public toastController: ToastController,
-        private iab: InAppBrowser,
         public platform: Platform) {
     }
 
@@ -116,19 +90,64 @@ export class ApiService {
         toast.present();
     }
 
-    openUrl(url: any) {
-        if (url.indexOf('.pdf') > -1 && this.platform.is('android')) {
-            this.inAppBrowserOptionsAndroid.zoom = 'no';
+    async getBase64(file: File | Blob): Promise<any> 
+{
+     return new Promise((resolve, reject) => 
+     {
+          const reader = new FileReader();
 
-            this.iab.create(
-                this.apiUrl + '/pdf/web/viewer.html?file=' + url,
-                '_blank',
-                this.inAppBrowserOptionsAndroid
-            );
-        } else if (this.platform.is('ios')) {
-            this.iab.create(url, '_blank', this.inAppBrowserOptionsiOS);
-        } else {
-            this.iab.create(url, '_blank', this.inAppBrowserOptionsAndroid);
-        }
+          reader.readAsDataURL(file);
+
+          reader.onloadend = () => resolve(reader.result);
+          reader.onerror = error => reject(error);
+     });
+}
+
+    async openUrl(url: any) {
+        // if (url.indexOf('.pdf') > -1) {
+        //     const blob = await (await fetch(url)).blob();
+
+
+        //     const writeOptions: WriteFileOptions = 
+        //     {
+        //         path: `${filename}`,
+        //         directory: Directory.Cache,
+        //         data: base64
+        //     }
+        
+        //     const writeResult = await Filesystem.writeFile(writeOptions);
+        
+        //     const options: FileOpenerOptions = 
+        //     {
+        //         filePath: writeResult.uri,
+        //         contentType: blob.type,
+        //         openWithDefault: true,
+        //     };
+            
+        //     await FileOpener.open(options);
+        // } else {
+            await Browser.open({ url });
+        // }
+        // if (url.indexOf('.pdf') > -1 && this.platform.is('android')) {
+        //     this.inAppBrowserOptionsAndroid.allowZoom = false;
+        //     DefaultWebViewOptions.android = this.inAppBrowserOptionsAndroid;
+
+
+        //     await InAppBrowser.openInWebView({
+        //         url: this.apiUrl + '/pdf/web/viewer.html?file=' + url,
+        //         options: {
+        //             ...DefaultWebViewOptions,
+        //             android: this.inAppBrowserOptionsAndroid
+        //         }
+        //     });
+        // } else if (this.platform.is('ios')) {
+        //     await InAppBrowser.openInWebView({
+        //         url,
+        //         options: {
+        //             ...DefaultWebViewOptions,
+        //             iOS: this.inAppBrowserOptionsiOS
+        //         }
+        //     });
+        // }
     }
 }

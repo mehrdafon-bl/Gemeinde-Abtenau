@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {SQLite, SQLiteObject, SQLiteDatabaseConfig} from '@awesome-cordova-plugins/sqlite/ngx';
 import {Platform} from '@ionic/angular';
-import {Device} from '@awesome-cordova-plugins/device/ngx';
 
 @Injectable({
     providedIn: 'root'
@@ -12,9 +11,9 @@ export class SqliteService {
 
     constructor(
         private sqLite: SQLite,
-        private platform: Platform,
-        private device: Device
+        private platform: Platform
     ) {
+
     }
 
     initDb() {
@@ -30,7 +29,7 @@ export class SqliteService {
             };
         }
 
-        if (this.device.cordova != null && (this.platform.is('android') || this.platform.is('ios'))) {
+        if (this.platform.is('android') || this.platform.is('ios')) {
             this.sqLite.create(this.dbConfig).then((db: SQLiteObject) => {
                 /*db.executeSql('DROP TABLE IF EXISTS api_content', [])
                         .then(() => console.log('Drop table if exists content'))
@@ -38,12 +37,14 @@ export class SqliteService {
 
                 console.log('Database created.');
 
-                db.executeSql('CREATE TABLE IF NOT EXISTS api_content (content_id INTEGER PRIMARY KEY, api_path TEXT, api_data TEXT)')
-                    .then(() => {
-                    })
-                    .catch(e => console.log(e));
-
-                this.db = db;
+                if (db) {
+                    db.executeSql('CREATE TABLE IF NOT EXISTS api_content (content_id INTEGER PRIMARY KEY, api_path TEXT, api_data TEXT)')
+                        .then(() => {
+                        })
+                        .catch(e => console.log(e));
+    
+                    this.db = db;
+                }
             }).catch(e => console.log(e));
         }
     }

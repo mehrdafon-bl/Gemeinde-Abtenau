@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 
 import {Platform} from '@ionic/angular';
-import {SplashScreen} from '@awesome-cordova-plugins/splash-screen/ngx';
-import {StatusBar} from '@awesome-cordova-plugins/status-bar/ngx';
+import {SplashScreen} from '@capacitor/splash-screen';
 import {LiveupdateService} from './liveupdate.service';
 import {OneSignal} from '@awesome-cordova-plugins/onesignal/ngx';
-import {Device} from '@awesome-cordova-plugins/device/ngx';
+import {Device} from '@capacitor/device';
 
 @Component({
     selector: 'app-root',
@@ -49,19 +48,15 @@ export class AppComponent implements OnInit {
 
     constructor(
         private platform: Platform,
-        private splashScreen: SplashScreen,
-        private statusBar: StatusBar,
         public liveUpdate: LiveupdateService,
         private oneSignal: OneSignal,
-        private device: Device
     ) {
         this.initializeApp();
     }
 
     initializeApp() {
-        this.platform.ready().then(() => {
-            this.statusBar.styleDefault();
-            this.splashScreen.hide();
+        this.platform.ready().then(async () => {
+            await SplashScreen.hide();
             this.initOneSignal();
         });
     }
@@ -84,7 +79,7 @@ export class AppComponent implements OnInit {
     }
 
     initOneSignal() {
-        if (this.device.cordova != null && (this.platform.is('android') || this.platform.is('ios'))) {
+        if (this.platform.is('android') || this.platform.is('ios')) {
             this.oneSignal
                 .startInit('c396d07c-01d8-4fb4-a19a-2bf02848f379', '978176498034')
                 .inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert)
@@ -92,7 +87,7 @@ export class AppComponent implements OnInit {
         }
     }
 
-    deviceData() {
+    async deviceData() {
         if (this.deviceDataTabCounter >= 4 && this.showDeviceData === false) {
             this.showDeviceData = true;
 
@@ -100,7 +95,8 @@ export class AppComponent implements OnInit {
                 this.pushId = data.userId;
             });
 
-            this.deviceId = this.device.uuid;
+            this.deviceId = await Device.getId();
+            console.log('🚀 ~ AppComponent ~ deviceData ~ this.deviceId:', this.deviceId)
 
             setTimeout(
                 () => {

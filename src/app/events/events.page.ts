@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit } from '@angular/core';
 import {ApiService} from '../api.service';
 import {NavigationExtras, Router} from '@angular/router';
 import {DatePipe} from '@angular/common';
@@ -11,7 +11,7 @@ import {SqliteService} from '../sqlite.service';
 })
 export class EventsPage implements OnInit {
     eventItems: any = [];
-    yearValues: any = [];
+    yearValues: string = new Date().getFullYear().toString();
     eventItemsRaw: any = [];
     firstLoad = true;
     isSearching = false;
@@ -24,8 +24,7 @@ export class EventsPage implements OnInit {
         private sqLite: SqliteService) {
     }
 
-    ngOnInit() {
-    }
+    ngOnInit() {}
 
     ionViewDidEnter() {
         if (this.firstLoad === true) {
@@ -36,13 +35,15 @@ export class EventsPage implements OnInit {
     }
 
     getApiData(isRefresher = false) {
-        this.sqLite.initDb();
+        // this.sqLite.initDb();
 
         const api = this.api.get('/events', true);
         api.subscribe(
             next => {
+                console.log('🚀 ~ EventsPage ~ getApiData ~ next.data:', next.data)
                 this.eventItems = next.data.events;
-                this.yearValues = next.data.years;
+                this.yearValues = next.data.years.map((year: number) => year.toString()).join(',');
+                console.log('🚀 ~ EventsPage ~ getApiData ~ this.yearValues:', typeof this.yearValues)
 
                 this.sqLite.db.executeSql('SELECT * FROM api_content WHERE api_path = ?', ['events'])
                     .then((data) => {
@@ -127,7 +128,7 @@ export class EventsPage implements OnInit {
         }
     }
 
-    datePicker(ev: any) {
+    async changeDatePicker(ev: any) {
         this.datePickerValue = ev.target.value;
         const dateFromDp = this.datepipe.transform(ev.target.value, 'yyyy-MM-ddT00:00:00');
         const q = dateFromDp;
