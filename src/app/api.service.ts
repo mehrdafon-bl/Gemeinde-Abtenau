@@ -4,7 +4,9 @@ import {LoadingController, Platform} from '@ionic/angular';
 import {Observable} from 'rxjs';
 import {ToastController} from '@ionic/angular';
 import { Browser } from '@capacitor/browser';
-// import { FileOpener, FileOpenerOptions } from '@capacitor-community/file-opener';
+import { FileOpener, FileOpenerOptions } from '@capacitor-community/file-opener';
+import { Directory, Filesystem, WriteFileOptions } from '@capacitor/filesystem';
+import { blobToBase64 } from './helpers/blob-to-base64';
 
 @Injectable({
     providedIn: 'root'
@@ -19,21 +21,6 @@ export class ApiService {
     readonly apiUrl = this.websiteUrl + '/api-dev';
 
     loadingAnimation: any;
-
-    // inAppBrowserOptionsAndroid: AndroidWebViewOptions = {
-    //     allowZoom: true,
-    //     hardwareBack: true,
-    //     pauseMedia: true,
-    // };
-
-    // inAppBrowserOptionsiOS: iOSWebViewOptions = {
-    //     allowOverScroll: true,
-    //     enableViewportScale: true,
-    //     allowInLineMediaPlayback: true,
-    //     surpressIncrementalRendering: true,
-    //     viewStyle: iOSViewStyle.FULL_SCREEN,
-    //     animationEffect: iOSAnimation.FLIP_HORIZONTAL
-    // };
 
     constructor(
         private http: HttpClient,
@@ -103,51 +90,29 @@ export class ApiService {
      });
 }
 
-    async openUrl(url: any) {
-        // if (url.indexOf('.pdf') > -1) {
-        //     const blob = await (await fetch(url)).blob();
+    async openUrl(url: string, filename?: string) {
+        if (url.indexOf('.pdf') > -1) {
+            const blob = await (await fetch(url)).blob();
 
-
-        //     const writeOptions: WriteFileOptions = 
-        //     {
-        //         path: `${filename}`,
-        //         directory: Directory.Cache,
-        //         data: base64
-        //     }
+            const writeOptions: WriteFileOptions = 
+            {
+                path: `${filename}`,
+                directory: Directory.Documents,
+                data: await blobToBase64(blob),
+            }
         
-        //     const writeResult = await Filesystem.writeFile(writeOptions);
+            const writeResult = await Filesystem.writeFile(writeOptions);
         
-        //     const options: FileOpenerOptions = 
-        //     {
-        //         filePath: writeResult.uri,
-        //         contentType: blob.type,
-        //         openWithDefault: true,
-        //     };
+            const options: FileOpenerOptions = 
+            {
+                filePath: writeResult.uri,
+                contentType: blob.type,
+                openWithDefault: true,
+            };
             
-        //     await FileOpener.open(options);
-        // } else {
+            await FileOpener.open(options);
+        } else {
             await Browser.open({ url });
-        // }
-        // if (url.indexOf('.pdf') > -1 && this.platform.is('android')) {
-        //     this.inAppBrowserOptionsAndroid.allowZoom = false;
-        //     DefaultWebViewOptions.android = this.inAppBrowserOptionsAndroid;
-
-
-        //     await InAppBrowser.openInWebView({
-        //         url: this.apiUrl + '/pdf/web/viewer.html?file=' + url,
-        //         options: {
-        //             ...DefaultWebViewOptions,
-        //             android: this.inAppBrowserOptionsAndroid
-        //         }
-        //     });
-        // } else if (this.platform.is('ios')) {
-        //     await InAppBrowser.openInWebView({
-        //         url,
-        //         options: {
-        //             ...DefaultWebViewOptions,
-        //             iOS: this.inAppBrowserOptionsiOS
-        //         }
-        //     });
-        // }
+        }
     }
 }

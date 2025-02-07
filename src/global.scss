@@ -34,7 +34,7 @@ img {
   height: auto;
 }
 
-/*ion-toolbar.in-toolbar{
-  background: url("/assets/logo.png") no-repeat 95% center transparent;
-  background-size: auto 90%;
-}*/
+:root.md {
+  --ion-safe-area-top: 1.5rem;
+  --ion-safe-area-bottom: 2rem;
+}
