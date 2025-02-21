@@ -2,6 +2,6 @@
 <resources>
     <string name="app_name">Abtenau</string>
     <string name="title_activity_main">Abtenau</string>
-    <string name="package_name">com.Abtenau</string>
-    <string name="custom_url_scheme">com.Abtenau</string>
+    <string name="package_name">com.mehrdafon.abtenau</string>
+    <string name="custom_url_scheme">com.mehrdafon.abtenau</string>
 </resources>

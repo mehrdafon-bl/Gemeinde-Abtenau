@@ -1,5 +1,5 @@
 PODS:
-  - Capacitor (7.0.0):
+  - Capacitor (7.0.1):
     - CapacitorCordova
   - CapacitorApp (7.0.0):
     - Capacitor
@@ -11,7 +11,7 @@ PODS:
     - Capacitor
     - SQLCipher
     - ZIPFoundation
-  - CapacitorCordova (7.0.0)
+  - CapacitorCordova (7.0.1)
   - CapacitorDevice (7.0.0):
     - Capacitor
   - CapacitorFilesystem (7.0.0):
@@ -28,17 +28,53 @@ PODS:
     - CapacitorCordova
   - CordovaPluginsStatic (7.0.1):
     - CapacitorCordova
-    - OneSignalXCFramework (= 3.12.10)
-  - OneSignalXCFramework (3.12.10):
-    - OneSignalXCFramework/OneSignalCore (= 3.12.10)
-    - OneSignalXCFramework/OneSignalExtension (= 3.12.10)
-    - OneSignalXCFramework/OneSignalOutcomes (= 3.12.10)
-  - OneSignalXCFramework/OneSignalCore (3.12.10)
-  - OneSignalXCFramework/OneSignalExtension (3.12.10):
+    - OneSignalXCFramework (= 5.2.9)
+  - OneSignalXCFramework (5.2.9):
+    - OneSignalXCFramework/OneSignalComplete (= 5.2.9)
+  - OneSignalXCFramework/OneSignal (5.2.9):
+    - OneSignalXCFramework/OneSignalCore
+    - OneSignalXCFramework/OneSignalExtension
+    - OneSignalXCFramework/OneSignalLiveActivities
+    - OneSignalXCFramework/OneSignalNotifications
+    - OneSignalXCFramework/OneSignalOSCore
+    - OneSignalXCFramework/OneSignalOutcomes
+    - OneSignalXCFramework/OneSignalUser
+  - OneSignalXCFramework/OneSignalComplete (5.2.9):
+    - OneSignalXCFramework/OneSignal
+    - OneSignalXCFramework/OneSignalInAppMessages
+    - OneSignalXCFramework/OneSignalLocation
+  - OneSignalXCFramework/OneSignalCore (5.2.9)
+  - OneSignalXCFramework/OneSignalExtension (5.2.9):
     - OneSignalXCFramework/OneSignalCore
     - OneSignalXCFramework/OneSignalOutcomes
-  - OneSignalXCFramework/OneSignalOutcomes (3.12.10):
+  - OneSignalXCFramework/OneSignalInAppMessages (5.2.9):
     - OneSignalXCFramework/OneSignalCore
+    - OneSignalXCFramework/OneSignalNotifications
+    - OneSignalXCFramework/OneSignalOSCore
+    - OneSignalXCFramework/OneSignalOutcomes
+    - OneSignalXCFramework/OneSignalUser
+  - OneSignalXCFramework/OneSignalLiveActivities (5.2.9):
+    - OneSignalXCFramework/OneSignalCore
+    - OneSignalXCFramework/OneSignalOSCore
+    - OneSignalXCFramework/OneSignalUser
+  - OneSignalXCFramework/OneSignalLocation (5.2.9):
+    - OneSignalXCFramework/OneSignalCore
+    - OneSignalXCFramework/OneSignalNotifications
+    - OneSignalXCFramework/OneSignalOSCore
+    - OneSignalXCFramework/OneSignalUser
+  - OneSignalXCFramework/OneSignalNotifications (5.2.9):
+    - OneSignalXCFramework/OneSignalCore
+    - OneSignalXCFramework/OneSignalExtension
+    - OneSignalXCFramework/OneSignalOutcomes
+  - OneSignalXCFramework/OneSignalOSCore (5.2.9):
+    - OneSignalXCFramework/OneSignalCore
+  - OneSignalXCFramework/OneSignalOutcomes (5.2.9):
+    - OneSignalXCFramework/OneSignalCore
+  - OneSignalXCFramework/OneSignalUser (5.2.9):
+    - OneSignalXCFramework/OneSignalCore
+    - OneSignalXCFramework/OneSignalNotifications
+    - OneSignalXCFramework/OneSignalOSCore
+    - OneSignalXCFramework/OneSignalOutcomes
   - SQLCipher (4.6.1):
     - SQLCipher/standard (= 4.6.1)
   - SQLCipher/common (4.6.1)
@@ -61,6 +97,7 @@ DEPENDENCIES:
   - "CapacitorStatusBar (from `../../node_modules/@capacitor/status-bar`)"
   - CordovaPlugins (from `../capacitor-cordova-ios-plugins`)
   - CordovaPluginsStatic (from `../capacitor-cordova-ios-plugins`)
+  - OneSignalXCFramework (< 6.0, >= 5.0)
 
 SPEC REPOS:
   trunk:
@@ -99,12 +136,12 @@ EXTERNAL SOURCES:
     :path: "../capacitor-cordova-ios-plugins"
 
 SPEC CHECKSUMS:
-  Capacitor: fcbee427ff437f414bbb3bc2d39364ad9bd2b8a5
+  Capacitor: 23fff43571a4d1e3ee7d67b5a3588c6e757c2913
   CapacitorApp: 45cb7cbef4aa380b9236fd6980033eb5cde6fcd2
   CapacitorBrowser: 352a66541b15ceadae1d703802b11979023705e3
   CapacitorCommunityFileOpener: c3b6c8b9060c9066e1e3725eb796119f6fb2baca
   CapacitorCommunitySqlite: 6501e7349acf998346acf24ef757861bb3f6fc2b
-  CapacitorCordova: 345f93b7edd121db98e4ec20ac94d6d7bcaf7e48
+  CapacitorCordova: 63d476958d5022d76f197031e8b7ea3519988c64
   CapacitorDevice: 62066b65e148a133df7b8c5bf972ba835b329748
   CapacitorFilesystem: 2881ad012b5c8d0ffbfed1216aadfc2cca16d5b5
   CapacitorHaptics: 1fba3e460e7614349c6d5f868b1fccdc5c87b66d
@@ -112,11 +149,11 @@ SPEC CHECKSUMS:
   CapacitorSplashScreen: f4e58cc02aafd91c7cbaf32a3d1b44d02a115125
   CapacitorStatusBar: 438e90beeeefa8276b24e6c5991cb02dd13e51bf
   CordovaPlugins: c9adfbadaacc9bcb26467543963d55a75bd7ca8b
-  CordovaPluginsStatic: 459afdc78f97bdff409736a55c4e3184870fc850
-  OneSignalXCFramework: e458f7a374192598a1d66418e1b61481c3cdf0e9
+  CordovaPluginsStatic: 404ebba973e7ba1d63b8e401c050b2e39590b072
+  OneSignalXCFramework: f5b2a3c4f130e4c910ead7bb25bed7455e976fbf
   SQLCipher: 77fbe633cd84db04b07876dd50766b4924b57d61
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
 
-PODFILE CHECKSUM: 3f3e83f967207fcf739b7c0bbf348af58b4cae00
+PODFILE CHECKSUM: c8edaad6239cfead7a7d88f724957ee6ccb22484
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.0

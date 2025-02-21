@@ -40,3 +40,35 @@ src/                         project source code
 |- index.html                html entry point
 www/                         compiled version
 ```
+
+## Updating CocoaPods to Version 1.16
+
+To ensure compatibility with the project, you need to update CocoaPods to version 1.16. Follow these steps:
+
+1. **Uninstall the Current Version of CocoaPods:**
+
+   ```sh
+   sudo gem uninstall cocoapods
+   ```
+
+2. **Install CocoaPods Version 1.16:**
+
+   ```sh
+   sudo gem install cocoapods -v 1.16
+   ```
+
+3. **Verify the Installation:**
+
+   ```sh
+   pod --version
+   ```
+
+4. **Update the Pods in Your Project:**
+
+   Navigate to your iOS project directory and update the pods.
+   ```sh
+   cd ios/App
+   pod install
+   ```
+
+By following these steps, you will ensure that CocoaPods is updated to the correct version for this project.

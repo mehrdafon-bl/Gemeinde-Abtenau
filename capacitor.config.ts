@@ -1,9 +1,12 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.Abtenau',
+  appId: 'com.mehrdafon.abtenau',
   appName: 'Abtenau',
-  webDir: 'www'
+  webDir: 'www',
+  ios: {
+    handleApplicationNotifications: false,
+  },
 };
 
 export default config;

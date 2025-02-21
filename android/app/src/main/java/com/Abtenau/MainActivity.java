@@ -1,4 +1,4 @@
-package com.Abtenau;
+package com.mehrdafon.abtenau;
 
 import com.getcapacitor.BridgeActivity;
 

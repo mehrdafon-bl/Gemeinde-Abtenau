@@ -1,119 +1,124 @@
-import {Component, OnInit} from '@angular/core';
-import {ApiService} from '../api.service';
-import {NavigationExtras, Router} from '@angular/router';
-import {SqliteService} from '../sqlite.service';
+import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../api.service';
+import { NavigationExtras, Router } from '@angular/router';
+import { SqliteService } from '../sqlite.service';
 
 @Component({
-    selector: 'app-news',
-    templateUrl: './news.page.html',
-    styleUrls: ['./news.page.scss'],
+  selector: 'app-news',
+  templateUrl: './news.page.html',
+  styleUrls: ['./news.page.scss'],
 })
 export class NewsPage implements OnInit {
-    newsItems: any = [];
-    refresherEvent: any = [];
-    firstLoad = true;
+  newsItems: any = [];
+  refresherEvent: any = [];
+  firstLoad = true;
 
-    constructor(
-        private api: ApiService,
-        private router: Router,
-        private sqLite: SqliteService) {
+  constructor(
+    private api: ApiService,
+    private router: Router,
+    private sqLite: SqliteService,
+  ) {}
+
+  ngOnInit() {}
+
+  ionViewDidEnter() {
+    if (this.firstLoad === true) {
+      this.getApiData();
     }
 
-    ngOnInit() {
-    }
+    this.firstLoad = false;
+  }
 
-    ionViewDidEnter() {
-        if (this.firstLoad === true) {
-            this.getApiData();
+  getApiData(isRefresher = false) {
+    this.sqLite.initDb();
+
+    const api = this.api.get('/news', isRefresher ? false : true);
+    api.subscribe(
+      (next) => {
+        this.newsItems = next.data.news;
+
+        if (this.newsItems.length > 0) {
+          this.sqLite.db
+            .executeSql('SELECT * FROM api_content WHERE api_path = ?', ['news'])
+            .then((data) => {
+              if (data.rows.length > 1 || data.rows.length < 1) {
+                this.sqLite.db
+                  .executeSql('DELETE FROM api_content WHERE api_path = ?', ['news'])
+                  .then(() => {
+                    this.sqLite.db
+                      .executeSql('INSERT INTO api_content (api_path, api_data) VALUES(?,?)', [
+                        'news',
+                        JSON.stringify(this.newsItems),
+                      ])
+                      .then(() => {})
+                      .catch((ei) => console.log('#insert dberror: ' + JSON.stringify(ei)));
+                  })
+                  .catch((ed) => console.log('#delete dberror: ' + JSON.stringify(ed)));
+              } else {
+                this.sqLite.db
+                  .executeSql('UPDATE api_content SET api_data = ? WHERE api_path = ?', [
+                    JSON.stringify(this.newsItems),
+                    'news',
+                  ])
+                  .then(() => {})
+                  .catch((eu) => console.log('#update dberror: ' + JSON.stringify(eu)));
+              }
+            })
+            .catch((es) => {
+              console.log('#select dberror: ' + JSON.stringify(es));
+
+              this.sqLite.db
+                .executeSql('INSERT INTO api_content (api_path, api_data) VALUES(?,?)', [
+                  'news',
+                  JSON.stringify(this.newsItems),
+                ])
+                .then(() => {})
+                .catch((ei) => console.log('#insert dberror: ' + JSON.stringify(ei)));
+            });
+        } else {
+          this.getDataFromDb();
         }
 
-        this.firstLoad = false;
-    }
+        if (isRefresher) {
+          this.refresherEvent.target.complete();
+        }
+      },
+      (error) => {
+        console.log(error);
 
-    getApiData(isRefresher = false) {
-        this.sqLite.initDb();
+        if (isRefresher) {
+          this.refresherEvent.target.complete();
+        }
 
-        const api = this.api.get('/news', isRefresher ? false : true);
-        api.subscribe(
-            next => {
-                this.newsItems = next.data.news;
+        this.getDataFromDb();
+      },
+    );
 
-                if (this.newsItems.length > 0) {
-                    this.sqLite.db.executeSql('SELECT * FROM api_content WHERE api_path = ?', ['news'])
-                        .then((data) => {
-                            if (data.rows.length > 1 || data.rows.length < 1) {
-                                this.sqLite.db.executeSql('DELETE FROM api_content WHERE api_path = ?', ['news'])
-                                    .then(() => {
-                                        this.sqLite.db.executeSql(
-                                            'INSERT INTO api_content (api_path, api_data) VALUES(?,?)',
-                                            ['news', JSON.stringify(this.newsItems)])
-                                            .then(() => {
-                                            })
-                                            .catch((ei) => console.log('#insert dberror: ' + JSON.stringify(ei)));
-                                    })
-                                    .catch((ed) => console.log('#delete dberror: ' + JSON.stringify(ed)));
-                            } else {
-                                this.sqLite.db.executeSql(
-                                    'UPDATE api_content SET api_data = ? WHERE api_path = ?',
-                                    [JSON.stringify(this.newsItems), 'news'])
-                                    .then(() => {
-                                    })
-                                    .catch((eu) => console.log('#update dberror: ' + JSON.stringify(eu)));
-                            }
-                        })
-                        .catch((es) => {
-                            console.log('#select dberror: ' + JSON.stringify(es));
+    setTimeout(() => {
+      if (this.newsItems.length === 0) {
+        this.getDataFromDb();
+      }
+    }, 4000);
+  }
 
-                            this.sqLite.db.executeSql(
-                                'INSERT INTO api_content (api_path, api_data) VALUES(?,?)',
-                                ['news', JSON.stringify(this.newsItems)])
-                                .then(() => {
-                                })
-                                .catch((ei) => console.log('#insert dberror: ' + JSON.stringify(ei)));
-                        });
-                } else {
-                    this.getDataFromDb();
-                }
+  showDetail(data) {
+    const dataSend: NavigationExtras = data;
+    this.router.navigate(['/news/detail'], dataSend);
+  }
 
-                if (isRefresher) {
-                    this.refresherEvent.target.complete();
-                }
-            },
-            error => {
-                console.log(error);
+  doRefresh(event) {
+    this.refresherEvent = event;
+    this.getApiData(true);
+  }
 
-                if (isRefresher) {
-                    this.refresherEvent.target.complete();
-                }
-
-                this.getDataFromDb();
-            }
-        );
-
-        setTimeout(() => {
-            if (this.newsItems.length === 0) {
-                this.getDataFromDb();
-            }
-        }, 4000);
-    }
-
-    showDetail(data) {
-        const dataSend: NavigationExtras = data;
-        this.router.navigate(['/news/detail'], dataSend);
-    }
-
-    doRefresh(event) {
-        this.refresherEvent = event;
-        this.getApiData(true);
-    }
-
-    getDataFromDb() {
-        this.sqLite.db.executeSql('SELECT * FROM api_content WHERE api_path = ?', ['news'])
-            .then((data) => {
-                for (let i = 0; i < data.rows.length; i++) {
-                    this.newsItems = JSON.parse(data.rows.item(i).api_data);
-                }
-            })
-            .catch((es) => console.log('#select error: ' + JSON.stringify(es)));
-    }
+  getDataFromDb() {
+    this.sqLite.db
+      .executeSql('SELECT * FROM api_content WHERE api_path = ?', ['news'])
+      .then((data) => {
+        for (let i = 0; i < data.rows.length; i++) {
+          this.newsItems = JSON.parse(data.rows.item(i).api_data);
+        }
+      })
+      .catch((es) => console.log('#select error: ' + JSON.stringify(es)));
+  }
 }
