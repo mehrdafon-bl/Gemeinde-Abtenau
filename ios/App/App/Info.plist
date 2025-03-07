@@ -62,5 +62,7 @@
 	<string>$MAX_STORE</string>
 	<key>IonMinBackgroundDuration</key>
 	<string>$MIN_BACKGROUND_DURATION</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Erlauben Sie den Standortzugriff, um das App Erlebnis zu verbessern.</string>
 </dict>
 </plist>
