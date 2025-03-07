@@ -1,5 +1,5 @@
 {
-  "name": "Abtenau",
+  "name": "abtenau-app",
   "version": "1.0.10",
   "author": "mehrdafon GmbH",
   "homepage": "https://mehrdafon.com/",
@@ -39,7 +39,6 @@
     "@ionic/core": "^7.0.1",
     "cordova-sqlite-storage": "^6.1.0",
     "core-js": "^2.6.12",
-    "moment": "^2.29.4",
     "onesignal-cordova-plugin": "^5.2.9",
     "rxjs": "^7.5.0",
     "tslib": "^1.14.1",

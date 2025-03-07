@@ -34,14 +34,14 @@ export class ApiService {
       const httpObserver = this.http.get(this.apiUrl + url);
       httpObserver.subscribe(
         (data) => {
-          if (showLoading) {
+          if (showLoading && this.loadingAnimation) {
             this.loadingAnimation.dismiss();
           }
 
           observer.next(data);
         },
         (error) => {
-          if (showLoading) {
+          if (showLoading && this.loadingAnimation) {
             this.loadingAnimation.dismiss();
           }
 

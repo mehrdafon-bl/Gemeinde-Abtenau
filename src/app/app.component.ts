@@ -43,6 +43,8 @@ export class AppComponent implements OnInit {
   ];
   public deviceId: any;
   public deviceDataTabCounter = 0;
+  public hasPushPermission = false;
+  public isOptedIn = false;
   public environment = environment;
   public menuStateClass: any;
   public pushId: any;
@@ -56,7 +58,11 @@ export class AppComponent implements OnInit {
       this.selectedIndex = this.appPages.findIndex((page) => page.title.toLowerCase() === path.toLowerCase());
     }
 
-    await this.oneSignalService.initialize();
+    if (this.platform.is('capacitor')) {
+      await this.oneSignalService.initialize();
+      this.hasPushPermission = await this.oneSignalService.hasPermission();
+      this.isOptedIn = await this.oneSignalService.getOptedIn();
+    }
   }
 
   async initializeApp(): Promise<void> {
@@ -87,6 +93,18 @@ export class AppComponent implements OnInit {
       }, 15000);
     } else {
       this.deviceDataTabCounter++;
+    }
+  }
+
+  async onActivatePush() {
+    if (!this.hasPushPermission) {
+      await this.oneSignalService.requestPermission();
+      this.hasPushPermission = await this.oneSignalService.hasPermission();
+    }
+
+    if (!this.isOptedIn) {
+      this.oneSignalService.optIn();
+      this.isOptedIn = await this.oneSignalService.getOptedIn();
     }
   }
 }

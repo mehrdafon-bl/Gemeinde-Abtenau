@@ -13,7 +13,6 @@
               <img src="/assets/logo_website_dark.png" class="menu-logo dark" />
             </div>
           </ion-list-header>
-          <ion-note></ion-note>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item
@@ -25,6 +24,13 @@
               [class.selected]="selectedIndex == i">
               <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
               <ion-label class="ion-text-wrap">{{ p.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false" *ngIf="!hasPushPermission && !isOptedIn">
+            <ion-item (click)="onActivatePush()" lines="none" detail="false">
+              <ion-icon slot="start" ios="notifications-outline" md="notifications-sharp"></ion-icon>
+              <ion-label class="ion-text-wrap">Push Nachrichten aktivieren</ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
