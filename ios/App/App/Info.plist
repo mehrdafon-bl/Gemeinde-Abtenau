@@ -51,16 +51,16 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
 	<key>IonChannelName</key>
-    <string>$CHANNEL_NAME</string>
+	<string>$CHANNEL_NAME</string>
 	<key>IonApi</key>
-    <string>$UPDATE_API</string>
+	<string>$UPDATE_API</string>
 	<key>IonUpdateMethod</key>
-    <string>$UPDATE_METHOD</string>
+	<string>$UPDATE_METHOD</string>
 	<key>IonAppId</key>
-    <string>$APP_ID</string>
+	<string>$APP_ID</string>
 	<key>IonMaxVersions</key>
-    <string>$MAX_STORE</string>
+	<string>$MAX_STORE</string>
 	<key>IonMinBackgroundDuration</key>
-    <string>$MIN_BACKGROUND_DURATION</string>
+	<string>$MIN_BACKGROUND_DURATION</string>
 </dict>
 </plist>
