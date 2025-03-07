@@ -38,7 +38,9 @@
         <div *ngIf="showDeviceData" class="device-data">
           <small>
             Push-ID: {{ pushId }}<br />
-            UUID: {{ deviceId }}
+            UUID: {{ deviceId }}<br />
+            Permisson: {{ hasPushPermission }}<br />
+            Opted-In: {{ isOptedIn }}
           </small>
         </div>
 
