@@ -1,9 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { Device } from '@capacitor/device';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { OneSignalService } from './onesignal.service';
 import { Platform } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  private readonly changeDetectorRef: ChangeDetectorRef = inject(ChangeDetectorRef);
   private readonly oneSignalService: OneSignalService = inject(OneSignalService);
   private readonly platform: Platform = inject(Platform);
 
@@ -58,10 +60,11 @@ export class AppComponent implements OnInit {
       this.selectedIndex = this.appPages.findIndex((page) => page.title.toLowerCase() === path.toLowerCase());
     }
 
-    if (this.platform.is('capacitor')) {
+    if (Capacitor.getPlatform() === 'android' || Capacitor.getPlatform() === 'ios') {
       await this.oneSignalService.initialize();
       this.hasPushPermission = await this.oneSignalService.hasPermission();
       this.isOptedIn = await this.oneSignalService.getOptedIn();
+      this.changeDetectorRef.detectChanges();
     }
   }
 
@@ -87,9 +90,12 @@ export class AppComponent implements OnInit {
 
       this.deviceId = (await Device.getId()).identifier;
 
+      this.changeDetectorRef.detectChanges();
+
       setTimeout(() => {
         this.showDeviceData = false;
         this.deviceDataTabCounter = 0;
+        this.changeDetectorRef.detectChanges();
       }, 15000);
     } else {
       this.deviceDataTabCounter++;
@@ -97,14 +103,8 @@ export class AppComponent implements OnInit {
   }
 
   async onActivatePush() {
-    if (!this.hasPushPermission) {
-      await this.oneSignalService.requestPermission();
-      this.hasPushPermission = await this.oneSignalService.hasPermission();
-    }
-
-    if (!this.isOptedIn) {
-      this.oneSignalService.optIn();
-      this.isOptedIn = await this.oneSignalService.getOptedIn();
-    }
+    this.oneSignalService.optIn();
+    this.hasPushPermission = await this.oneSignalService.hasPermission();
+    this.isOptedIn = await this.oneSignalService.getOptedIn();
   }
 }
