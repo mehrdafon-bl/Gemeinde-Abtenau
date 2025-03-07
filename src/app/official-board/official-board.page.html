@@ -16,7 +16,7 @@
 
     <ng-container *ngIf="boardItems">
         <ion-list>
-            <ion-item *ngFor="let data of boardItems" (click)="api.openUrl(data.url)">
+            <ion-item *ngFor="let data of boardItems" (click)="api.openUrl(data.url, data.title)">
                 <ion-label class="ion-text-wrap">
                     <strong>{{data.title}}</strong>
                     <p>{{data.content}}</p>

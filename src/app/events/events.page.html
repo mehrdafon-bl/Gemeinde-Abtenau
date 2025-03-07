@@ -40,15 +40,23 @@
                 Datum auswählen
             </ion-label>
 
-            <ion-datetime display-format="DD.MM.YYYY"
-                          cancel-text="Zurücksetzen"
-                          done-text="Auswählen"
-                          [yearValues]="yearValues"
-                          month-short-names="Jan,Feb,Mär,Apr,Mai,Jun,Jul,Aug,Sep,Okt,Nov,Dez"
-                          (ionChange)="datePicker($event)"
-                          (ionCancel)="resetDatePicker()"
-                          [value]="datePickerValue">
-            </ion-datetime>
+            <ion-datetime-button datetime="datetime"></ion-datetime-button>
+
         </ion-item>
     </ion-toolbar>
 </ion-footer>
+
+<ion-modal [keepContentsMounted]="true">
+    <ng-template>
+                  <ion-datetime id="datetime" 
+                            locale="de-DE"
+                          cancelText="Zurücksetzen"
+                          doneText="Auswählen"
+                          presentation="date"
+                          [showDefaultButtons]="true"
+                          [yearValues]="yearValues"
+                          (ionChange)="changeDatePicker($event)"
+                          (ionCancel)="resetDatePicker()"
+                          [value]="datePickerValue" />
+    </ng-template>
+  </ion-modal>

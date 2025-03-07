@@ -1,7 +1,8 @@
 {
   "name": "Abtenau",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular",
   "id": "39399c61"
