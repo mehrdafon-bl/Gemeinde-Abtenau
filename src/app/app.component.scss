@@ -5,12 +5,6 @@ ion-menu ion-content {
 ion-menu.md ion-content {
   --padding-start: 8px;
   --padding-end: 8px;
-  --padding-top: 20px;
-  --padding-bottom: 20px;
-}
-
-ion-menu.md ion-list {
-  padding: 20px 0;
 }
 
 ion-menu.md ion-note {
@@ -146,9 +140,6 @@ ion-menu ion-list#inbox-list ion-list-header {
 
 ion-menu.ios .menu-logo-container {
   padding-top: 23px;
-
-  .menu-logo {
-  }
 }
 
 ion-menu.ios {
@@ -211,12 +202,10 @@ ion-menu.ios {
   }
 
   .mehrdafon-logo-container {
-    small {
-    }
+    small {}
 
     &.open {
-      .mehrdafon-logo {
-      }
+      .mehrdafon-logo {}
     }
 
     .mehrdafon-logo {

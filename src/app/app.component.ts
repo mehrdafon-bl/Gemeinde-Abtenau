@@ -1,7 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { Device } from '@capacitor/device';
 import { SplashScreen } from '@capacitor/splash-screen';
-import { LiveupdateService } from './liveupdate.service';
 import { OneSignalService } from './onesignal.service';
+import { Platform } from '@ionic/angular';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -10,14 +12,8 @@ import { OneSignalService } from './onesignal.service';
 })
 export class AppComponent implements OnInit {
   private readonly oneSignalService: OneSignalService = inject(OneSignalService);
-  public liveUpdate: LiveupdateService = inject(LiveupdateService);
+  private readonly platform: Platform = inject(Platform);
 
-  menuStateClass: any;
-  pushId: any;
-  deviceId: any;
-  deviceDataTabCounter = 0;
-  showDeviceData = false;
-  public selectedIndex = 0;
   public appPages = [
     {
       title: 'Aktuelles',
@@ -45,23 +41,28 @@ export class AppComponent implements OnInit {
       icon: 'document',
     },
   ];
-
-  constructor() {
-    this.initializeApp();
-  }
-
-  async initializeApp(): Promise<void> {
-    await SplashScreen.hide();
-  }
+  public deviceId: any;
+  public deviceDataTabCounter = 0;
+  public environment = environment;
+  public menuStateClass: any;
+  public pushId: any;
+  public selectedIndex = 0;
+  public showDeviceData = false;
 
   async ngOnInit() {
+    await this.initializeApp();
     const path = window.location.pathname.split('news/')[1];
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex((page) => page.title.toLowerCase() === path.toLowerCase());
     }
 
-    this.liveUpdate.checkForUpdates(10000);
     await this.oneSignalService.initialize();
+  }
+
+  async initializeApp(): Promise<void> {
+    this.platform.ready().then(async () => {
+      await SplashScreen.hide();
+    });
   }
 
   menuState(ev: any) {
@@ -69,6 +70,23 @@ export class AppComponent implements OnInit {
       this.menuStateClass = 'open';
     } else {
       this.menuStateClass = 'close';
+    }
+  }
+
+  async deviceData() {
+    if (this.deviceDataTabCounter >= 4 && this.showDeviceData === false) {
+      this.showDeviceData = true;
+
+      this.pushId = await this.oneSignalService.getOnesignalId();
+
+      this.deviceId = (await Device.getId()).identifier;
+
+      setTimeout(() => {
+        this.showDeviceData = false;
+        this.deviceDataTabCounter = 0;
+      }, 15000);
+    } else {
+      this.deviceDataTabCounter++;
     }
   }
 }

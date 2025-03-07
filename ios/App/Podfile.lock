@@ -5,16 +5,12 @@ PODS:
     - Capacitor
   - CapacitorBrowser (7.0.0):
     - Capacitor
-  - CapacitorCommunityFileOpener (7.0.0):
-    - Capacitor
   - CapacitorCommunitySqlite (7.0.0):
     - Capacitor
     - SQLCipher
     - ZIPFoundation
   - CapacitorCordova (7.0.1)
   - CapacitorDevice (7.0.0):
-    - Capacitor
-  - CapacitorFilesystem (7.0.0):
     - Capacitor
   - CapacitorHaptics (7.0.0):
     - Capacitor
@@ -86,11 +82,9 @@ DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorApp (from `../../node_modules/@capacitor/app`)"
   - "CapacitorBrowser (from `../../node_modules/@capacitor/browser`)"
-  - "CapacitorCommunityFileOpener (from `../../node_modules/@capacitor-community/file-opener`)"
   - "CapacitorCommunitySqlite (from `../../node_modules/@capacitor-community/sqlite`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorDevice (from `../../node_modules/@capacitor/device`)"
-  - "CapacitorFilesystem (from `../../node_modules/@capacitor/filesystem`)"
   - "CapacitorHaptics (from `../../node_modules/@capacitor/haptics`)"
   - "CapacitorKeyboard (from `../../node_modules/@capacitor/keyboard`)"
   - "CapacitorSplashScreen (from `../../node_modules/@capacitor/splash-screen`)"
@@ -112,16 +106,12 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/app"
   CapacitorBrowser:
     :path: "../../node_modules/@capacitor/browser"
-  CapacitorCommunityFileOpener:
-    :path: "../../node_modules/@capacitor-community/file-opener"
   CapacitorCommunitySqlite:
     :path: "../../node_modules/@capacitor-community/sqlite"
   CapacitorCordova:
     :path: "../../node_modules/@capacitor/ios"
   CapacitorDevice:
     :path: "../../node_modules/@capacitor/device"
-  CapacitorFilesystem:
-    :path: "../../node_modules/@capacitor/filesystem"
   CapacitorHaptics:
     :path: "../../node_modules/@capacitor/haptics"
   CapacitorKeyboard:
@@ -139,11 +129,9 @@ SPEC CHECKSUMS:
   Capacitor: 23fff43571a4d1e3ee7d67b5a3588c6e757c2913
   CapacitorApp: 45cb7cbef4aa380b9236fd6980033eb5cde6fcd2
   CapacitorBrowser: 352a66541b15ceadae1d703802b11979023705e3
-  CapacitorCommunityFileOpener: c3b6c8b9060c9066e1e3725eb796119f6fb2baca
   CapacitorCommunitySqlite: 6501e7349acf998346acf24ef757861bb3f6fc2b
   CapacitorCordova: 63d476958d5022d76f197031e8b7ea3519988c64
   CapacitorDevice: 62066b65e148a133df7b8c5bf972ba835b329748
-  CapacitorFilesystem: 2881ad012b5c8d0ffbfed1216aadfc2cca16d5b5
   CapacitorHaptics: 1fba3e460e7614349c6d5f868b1fccdc5c87b66d
   CapacitorKeyboard: 2c26c6fccde35023c579fc37d4cae6326d5e6343
   CapacitorSplashScreen: f4e58cc02aafd91c7cbaf32a3d1b44d02a115125
@@ -154,6 +142,6 @@ SPEC CHECKSUMS:
   SQLCipher: 77fbe633cd84db04b07876dd50766b4924b57d61
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
 
-PODFILE CHECKSUM: c8edaad6239cfead7a7d88f724957ee6ccb22484
+PODFILE CHECKSUM: 1be2e76bb24c55c93f4ba55049b8eaf2a2f63240
 
-COCOAPODS: 1.16.0
+COCOAPODS: 1.16.2

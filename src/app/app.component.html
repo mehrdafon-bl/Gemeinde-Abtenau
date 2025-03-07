@@ -37,15 +37,8 @@
         </div>
 
         <div [className]="menuStateClass + ' mehrdafon-logo-container'">
-          <strong *ngIf="liveUpdate.showUpdateProcess">
-            <small>{{ liveUpdate.updateProcessType }}: {{ liveUpdate.updateProgress }}%</small>
-          </strong>
-
-          <br />
-          <br />
-
-          <small *ngIf="liveUpdate.build"> Build {{ liveUpdate.build }} | </small>
-          <small> APP by <span class="mehrdafon-logo">mehrdafon GmbH</span> </small>
+          <small> Version: {{ environment.version }} | </small>
+          <small> APP by <span class="mehrdafon-logo" (click)="deviceData()">mehrdafon GmbH</span> </small>
         </div>
       </ion-content>
     </ion-menu>

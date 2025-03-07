@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
 import { NavigationExtras, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -10,19 +10,17 @@ import { SqliteService } from '../sqlite.service';
   styleUrls: ['./events.page.scss'],
 })
 export class EventsPage implements OnInit {
-  eventItems: any = [];
-  yearValues: string = new Date().getFullYear().toString();
-  eventItemsRaw: any = [];
-  firstLoad = true;
-  isSearching = false;
-  datePickerValue: any;
+  private readonly api: ApiService = inject(ApiService);
+  private readonly router: Router = inject(Router);
+  private readonly sqLite: SqliteService = inject(SqliteService);
 
-  constructor(
-    private api: ApiService,
-    private router: Router,
-    public datepipe: DatePipe,
-    private sqLite: SqliteService,
-  ) {}
+  public datepipe: DatePipe = inject(DatePipe);
+  public eventItems: any = [];
+  public yearValues: string = new Date().getFullYear().toString();
+  public eventItemsRaw: any = [];
+  public firstLoad = true;
+  public isSearching = false;
+  public datePickerValue: any;
 
   ngOnInit() {}
 
@@ -40,10 +38,9 @@ export class EventsPage implements OnInit {
     const api = this.api.get('/events', true);
     api.subscribe(
       (next) => {
-        console.log('🚀 ~ EventsPage ~ getApiData ~ next.data:', next.data);
         this.eventItems = next.data.events;
         this.yearValues = next.data.years.map((year: number) => year.toString()).join(',');
-        console.log('🚀 ~ EventsPage ~ getApiData ~ this.yearValues:', typeof this.yearValues);
+        this.eventItemsRaw = JSON.parse(JSON.stringify(this.eventItems));
 
         this.sqLite.db
           .executeSql('SELECT * FROM api_content WHERE api_path = ?', ['events'])
@@ -83,7 +80,7 @@ export class EventsPage implements OnInit {
               .catch((ei) => console.log('#insert dberror: ' + JSON.stringify(ei)));
           });
 
-        this.eventItemsRaw = this.eventItems;
+        this.eventItemsRaw = JSON.parse(JSON.stringify(this.eventItems));
       },
       (error) => {
         console.log(error);
@@ -96,7 +93,7 @@ export class EventsPage implements OnInit {
               console.log(dbData);
               this.eventItems = dbData.events;
               this.yearValues = dbData.years;
-              this.eventItemsRaw = this.eventItems;
+              this.eventItemsRaw = JSON.parse(JSON.stringify(this.eventItems));
             }
           })
           .catch((es) => console.log('#select error: ' + JSON.stringify(es)));

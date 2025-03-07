@@ -60,4 +60,8 @@ export class OneSignalService {
       }
     }
   }
+
+  public async getOnesignalId(): Promise<string | null> {
+    return await OneSignal.User.getOnesignalId();
+  }
 }
